@@ -51,6 +51,13 @@
   color: #6b7280;
 }
 
+.page-layout {
+  display: grid;
+  grid-template-columns: 4fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
 .form-container {
   display: flex;
   flex-direction: column;
@@ -81,12 +88,96 @@
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+// 제목과 편집 버튼을 묶는 그룹
+.section-title-group {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .section-title {
   font-size: 20px;
   font-weight: 700;
   color: #1a1d1f;
-  flex: 1;
   letter-spacing: -0.3px;
+  margin: 0;
+}
+
+// 섹션 제목 편집 영역
+.section-title-edit {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-title-input {
+  flex: 1;
+  max-width: 400px;
+}
+
+// 편집/삭제 버튼 (헤더용)
+.edit-btn-header,
+.delete-btn-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #6b7280;
+
+  &:hover {
+    background: #f3f4f6;
+    color: #1a1d1f;
+  }
+}
+
+.delete-btn-header {
+  &:hover {
+    background: #fee;
+    color: #f87171;
+  }
+}
+
+// 편집 액션 버튼
+.edit-action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &.apply {
+    background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%);
+    color: white;
+
+    &:hover {
+      background: linear-gradient(135deg, #1e40af 0%, #1d4ed8 100%);
+      box-shadow: 0 2px 8px rgba(30, 64, 175, 0.3);
+    }
+  }
+
+  &.cancel {
+    background: #f3f4f6;
+    color: #6b7280;
+
+    &:hover {
+      background: #e8e9eb;
+      color: #1a1d1f;
+    }
+  }
 }
 
 .add-btn {
@@ -173,6 +264,27 @@
   }
 }
 
+.field-select {
+  padding: 12px 16px;
+  border: 1px solid #e8e9eb;
+  border-radius: 10px;
+  font-size: 14px;
+  color: #1a1d1f;
+  background: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:focus {
+    outline: none;
+    border-color: #1e40af;
+    box-shadow: 0 0 0 3px rgba(30, 64, 175, 0.1);
+  }
+
+  &:hover {
+    border-color: #d1d5db;
+  }
+}
+
 .career-item {
   background: #f7f8fa;
   border: 1px solid #e8e9eb;
@@ -220,3 +332,282 @@
   }
 }
 
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  gap: 12px;
+}
+
+// standalone 빈 상태 (section 외부)
+.empty-state-standalone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  gap: 12px;
+  background: #ffffff;
+  border: 2px dashed #e8e9eb;
+  border-radius: 16px;
+}
+
+.empty-state-text {
+  font-size: 14px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 24px;
+  border-top: 1px solid #e8e9eb;
+}
+
+// 오른쪽 액션 사이드바
+.action-sidebar {
+  position: sticky;
+  top: 88px; // header(64px) + gap(24px)
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-section {
+  background: #ffffff;
+  border: 1px solid #e8e9eb;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.sidebar-header {
+  margin-bottom: 16px;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1d1f;
+}
+
+.sidebar-add-btn {
+  width: 100%;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+// 섹션 목록
+.sidebar-sections-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+
+  // VueDraggableNext 컨테이너 스타일
+  > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #e5e7eb;
+    border-radius: 2px;
+
+    &:hover {
+      background: #d1d5db;
+    }
+  }
+}
+
+.sidebar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+  text-align: center;
+  gap: 8px;
+}
+
+.sidebar-empty-text {
+  font-size: 13px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+// 섹션 아이템
+.sidebar-section-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  background: #f7f8fa;
+  border: 1px solid #e8e9eb;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  cursor: move;
+
+  &:hover {
+    background: #eef0f2;
+    border-color: #d1d5db;
+  }
+
+  // 고정 섹션 (수정 불가)
+  &.sidebar-section-fixed {
+    background: #ffffff;
+    border: 1px solid #e8e9eb;
+    cursor: default;
+
+    &:hover {
+      background: #f9fafb;
+      border-color: #e8e9eb;
+    }
+
+    .sidebar-section-info {
+      gap: 10px;
+    }
+
+    .sidebar-section-title {
+      color: #4b5563;
+      font-weight: 500;
+    }
+  }
+}
+
+// 드래그 상태 스타일
+.sidebar-section-ghost {
+  opacity: 0.4;
+  background: #dbeafe;
+  border: 2px dashed #3b82f6;
+}
+
+.sidebar-section-chosen {
+  background: #eff6ff;
+  border-color: #3b82f6;
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+  cursor: grabbing;
+}
+
+.sidebar-section-drag {
+  opacity: 0.8;
+  transform: rotate(2deg);
+  cursor: grabbing;
+}
+
+// 구분선
+.sidebar-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    #e8e9eb 20%,
+    #e8e9eb 80%,
+    transparent
+  );
+  margin: 8px 0;
+}
+
+.sidebar-section-drag-handle {
+  display: flex;
+  align-items: center;
+  cursor: grab;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+
+  &:hover {
+    background: rgba(107, 114, 128, 0.1);
+  }
+
+  &:active {
+    cursor: grabbing;
+  }
+}
+
+.sidebar-section-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.sidebar-section-number {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background: #1e40af;
+  color: white;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.sidebar-section-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1d1f;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar-section-delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+  background: transparent;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #9ca3af;
+  flex-shrink: 0;
+
+  &:hover {
+    background: #fee;
+    color: #f87171;
+  }
+}
+
+// 미래 확장 공간
+.sidebar-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 12px;
+  text-align: center;
+  gap: 8px;
+  border: 1px dashed #e8e9eb;
+  border-radius: 8px;
+}
+
+.sidebar-placeholder-text {
+  font-size: 12px;
+  color: #d1d5db;
+  margin: 0;
+}

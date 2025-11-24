@@ -43,3 +43,23 @@ export interface TextAreaProps {
   rows?: number;
 }
 
+// DatePicker 컴포넌트 Props
+export type TDatePickerProps = {
+  modelValue: string | string[] | Date | Date[] | null;
+  locale?: string;
+  customLocale?: {
+    cancel: string;
+    select: string;
+    today: string;
+  };
+  useToday?: boolean;
+  id?: string;
+  format?: string;
+  type?: string;
+  range?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  placeholder?: string;
+  useTimePicker?: boolean;
+  useTimePickerInline?: boolean;
+};

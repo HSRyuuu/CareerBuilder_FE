@@ -2,306 +2,357 @@
   <div class="career-register-page">
     <!-- 메인 콘텐츠 -->
     <div class="page-header">
-      <h1 class="page-title">이력 등록</h1>
-      <p class="page-subtitle">새로운 이력을 등록하고 관리하세요</p>
+      <h1 class="page-title">성과 등록</h1>
+      <p class="page-subtitle">새로운 성과를 등록하고 관리하세요</p>
     </div>
 
-    <div class="form-container">
-      <!-- 기본 정보 섹션 -->
-      <section class="form-section">
-        <div class="section-header">
-          <div
-            class="section-icon"
-            style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%)"
-          >
-            <v-icon color="white" size="small">mdi-account</v-icon>
-          </div>
-          <h2 class="section-title">기본 정보</h2>
-        </div>
-        <div class="form-grid">
-          <div class="form-field">
-            <label class="field-label">이름 *</label>
-            <input
-              v-model="formData.name"
-              type="text"
-              class="field-input"
-              placeholder="이름을 입력하세요"
-            />
-          </div>
-          <div class="form-field">
-            <label class="field-label">이메일 *</label>
-            <input
-              v-model="formData.email"
-              type="email"
-              class="field-input"
-              placeholder="email@example.com"
-            />
-          </div>
-          <div class="form-field">
-            <label class="field-label">연락처</label>
-            <input
-              v-model="formData.phone"
-              type="tel"
-              class="field-input"
-              placeholder="010-0000-0000"
-            />
-          </div>
-          <div class="form-field">
-            <label class="field-label">직무</label>
-            <input
-              v-model="formData.position"
-              type="text"
-              class="field-input"
-              placeholder="예: 프론트엔드 개발자"
-            />
-          </div>
-        </div>
-      </section>
-
-      <!-- 경력 사항 섹션 -->
-      <section class="form-section">
-        <div class="section-header">
-          <div
-            class="section-icon"
-            style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)"
-          >
-            <v-icon color="white" size="small">mdi-briefcase</v-icon>
-          </div>
-          <h2 class="section-title">경력 사항</h2>
-          <button class="add-btn" @click="addCareer">
-            <v-icon size="small">mdi-plus</v-icon>
-            추가
-          </button>
-        </div>
-
-        <div v-for="(career, index) in formData.careers" :key="index" class="career-item">
-          <div class="item-header">
-            <span class="item-number">{{ index + 1 }}</span>
-            <button class="delete-btn" @click="removeCareer(index)">
-              <v-icon size="small">mdi-delete</v-icon>
-            </button>
+    <div class="page-layout">
+      <!-- 왼쪽: 메인 폼 영역 (4) -->
+      <div class="form-container">
+        <!-- 기본 정보 섹션 -->
+        <section class="form-section">
+          <div class="section-header">
+            <div
+              class="section-icon"
+              style="background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%)"
+            >
+              <v-icon color="white" size="small">mdi-trophy</v-icon>
+            </div>
+            <h2 class="section-title">기본 정보</h2>
           </div>
           <div class="form-grid">
-            <div class="form-field">
-              <label class="field-label">회사명</label>
-              <input
-                v-model="career.company"
-                type="text"
-                class="field-input"
-                placeholder="회사명을 입력하세요"
+            <div class="form-field full-width">
+              <label class="field-label">제목 *</label>
+              <Input
+                v-model="formData.title"
+                placeholder="성과 제목을 입력하세요"
+                :size="CommonSize.Medium"
               />
             </div>
+
             <div class="form-field">
-              <label class="field-label">직책</label>
-              <input
-                v-model="career.role"
-                type="text"
-                class="field-input"
-                placeholder="직책을 입력하세요"
-              />
-            </div>
-            <div class="form-field">
-              <label class="field-label">시작일</label>
-              <input v-model="career.startDate" type="month" class="field-input" />
+              <label class="field-label">시작일 *</label>
+              <DatePicker v-model="formData.durationStart" type="date" />
             </div>
             <div class="form-field">
               <label class="field-label">종료일</label>
-              <input v-model="career.endDate" type="month" class="field-input" />
+              <DatePicker v-model="formData.durationEnd" type="date" />
             </div>
+
             <div class="form-field full-width">
-              <label class="field-label">업무 내용</label>
-              <textarea
-                v-model="career.description"
-                class="field-textarea"
-                placeholder="담당했던 업무 내용을 입력하세요"
-                rows="4"
-              ></textarea>
+              <label class="field-label">소속</label>
+              <Input
+                v-model="formData.orgName"
+                placeholder="회사명 또는 조직명"
+                :size="CommonSize.Medium"
+              />
+            </div>
+
+            <div class="form-field full-width">
+              <label class="field-label">핵심 성과 *</label>
+              <TextArea
+                v-model="formData.impactSummary"
+                placeholder="이 성과의 핵심 내용과 영향을 간략히 설명하세요"
+                :rows="4"
+              />
             </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <!-- 학력 사항 섹션 -->
-      <section class="form-section">
-        <div class="section-header">
-          <div
-            class="section-icon"
-            style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)"
-          >
-            <v-icon color="white" size="small">mdi-school</v-icon>
+        <!-- 스킬 섹션 (하드코딩, 수정 불가) -->
+        <section class="form-section">
+          <div class="section-header">
+            <div
+              class="section-icon"
+              style="background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%)"
+            >
+              <v-icon color="white" size="small">mdi-code-tags</v-icon>
+            </div>
+            <h2 class="section-title">스킬</h2>
           </div>
-          <h2 class="section-title">학력 사항</h2>
-          <button class="add-btn" @click="addEducation">
-            <v-icon size="small">mdi-plus</v-icon>
-            추가
-          </button>
-        </div>
+          <div class="form-grid">
+            <div class="form-field full-width">
+              <Input
+                v-model="formData.skills"
+                placeholder="관련 스킬을 쉼표로 구분하여 입력하세요 (예: Vue.js, TypeScript, Node.js)"
+                :size="CommonSize.Medium"
+              />
+            </div>
+          </div>
+        </section>
 
-        <div v-for="(education, index) in formData.educations" :key="index" class="career-item">
-          <div class="item-header">
-            <span class="item-number">{{ index + 1 }}</span>
-            <button class="delete-btn" @click="removeEducation(index)">
+        <!-- 상세 섹션들 (개별 form-section으로 구성) -->
+        <section
+          v-for="(section, index) in formData.sections"
+          :key="section.tempId"
+          class="form-section"
+        >
+          <div class="section-header">
+            <div
+              class="section-icon"
+              style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)"
+            >
+              <v-icon color="white" size="small">mdi-text-box-multiple</v-icon>
+            </div>
+
+            <!-- 제목과 편집 버튼 그룹 -->
+            <div class="section-title-group">
+              <!-- 편집 모드가 아닐 때 -->
+              <template v-if="!section.isEditingTitle">
+                <h2 class="section-title">
+                  {{ section.title || `항목 ${index + 1}` }}
+                </h2>
+                <button class="edit-btn-header" @click="startEditSectionTitle(index)">
+                  <v-icon size="small">mdi-pencil</v-icon>
+                </button>
+              </template>
+
+              <!-- 편집 모드일 때 -->
+              <template v-else>
+                <div class="section-title-edit">
+                  <Input
+                    v-model="section.tempTitle!"
+                    placeholder="항목 제목을 입력하세요"
+                    :size="CommonSize.Small"
+                    class="section-title-input"
+                  />
+                  <button class="edit-action-btn apply" @click="applySectionTitle(index)">
+                    <v-icon size="small">mdi-check</v-icon>
+                  </button>
+                  <button class="edit-action-btn cancel" @click="cancelSectionTitleEdit(index)">
+                    <v-icon size="small">mdi-close</v-icon>
+                  </button>
+                </div>
+              </template>
+            </div>
+
+            <button class="delete-btn-header" @click="removeSection(index)">
               <v-icon size="small">mdi-delete</v-icon>
             </button>
           </div>
-          <div class="form-grid">
-            <div class="form-field">
-              <label class="field-label">학교명</label>
-              <input
-                v-model="education.school"
-                type="text"
-                class="field-input"
-                placeholder="학교명을 입력하세요"
-              />
-            </div>
-            <div class="form-field">
-              <label class="field-label">전공</label>
-              <input
-                v-model="education.major"
-                type="text"
-                class="field-input"
-                placeholder="전공을 입력하세요"
-              />
-            </div>
-            <div class="form-field">
-              <label class="field-label">학위</label>
-              <input
-                v-model="education.degree"
-                type="text"
-                class="field-input"
-                placeholder="학사, 석사 등"
-              />
-            </div>
-            <div class="form-field">
-              <label class="field-label">졸업년도</label>
-              <input
-                v-model="education.graduationYear"
-                type="number"
-                class="field-input"
-                placeholder="2024"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
 
-      <!-- 기술 스택 섹션 -->
-      <section class="form-section">
-        <div class="section-header">
-          <div
-            class="section-icon"
-            style="background: linear-gradient(135deg, #93c5fd 0%, #60a5fa 100%)"
-          >
-            <v-icon color="white" size="small">mdi-code-tags</v-icon>
+          <div class="form-grid">
+            <div class="form-field full-width">
+              <label class="field-label">내용</label>
+              <TextArea v-model="section.content" placeholder="상세 내용을 입력하세요" :rows="6" />
+            </div>
           </div>
-          <h2 class="section-title">기술 스택</h2>
+        </section>
+
+        <!-- 빈 상태 -->
+        <div v-if="formData.sections.length === 0" class="empty-state-standalone">
+          <v-icon size="large" color="#9ca3af">mdi-text-box-plus</v-icon>
+          <p class="empty-state-text">섹션을 추가하여 성과를 구체적으로 설명해보세요</p>
         </div>
-        <div class="form-field">
-          <label class="field-label">기술 스택</label>
-          <textarea
-            v-model="formData.skills"
-            class="field-textarea"
-            placeholder="예: Vue.js, React, TypeScript, Node.js (쉼표로 구분)"
-            rows="4"
-          ></textarea>
+
+        <!-- 액션 버튼 -->
+        <div class="form-actions">
+          <Button :variant="ButtonVariant.Secondary" :size="CommonSize.Large" @click="handleCancel">
+            취소
+          </Button>
+          <Button :variant="ButtonVariant.Primary" :size="CommonSize.Large" @click="handleSave">
+            저장
+          </Button>
         </div>
-      </section>
+      </div>
+
+      <!-- 오른쪽: 액션 사이드바 (1) -->
+      <aside class="action-sidebar">
+        <!-- 섹션 관리 영역 -->
+        <div class="sidebar-section">
+          <div class="sidebar-header">
+            <h3 class="sidebar-title">편집</h3>
+          </div>
+
+          <!-- 항목 추가 버튼 -->
+          <Button
+            :variant="ButtonVariant.Primary"
+            :size="CommonSize.Medium"
+            class="sidebar-add-btn"
+            @click="addSection"
+          >
+            <v-icon size="small">mdi-plus</v-icon>
+            항목 추가
+          </Button>
+
+          <!-- 섹션 목록 -->
+          <div class="sidebar-sections-list">
+            <!-- 고정 섹션 (수정 불가) -->
+            <div class="sidebar-section-item sidebar-section-fixed">
+              <div class="sidebar-section-info">
+                <v-icon size="small" color="#2563eb">mdi-trophy</v-icon>
+                <span class="sidebar-section-title">기본 정보</span>
+              </div>
+            </div>
+
+            <div class="sidebar-section-item sidebar-section-fixed">
+              <div class="sidebar-section-info">
+                <v-icon size="small" color="#3b82f6">mdi-code-tags</v-icon>
+                <span class="sidebar-section-title">스킬</span>
+              </div>
+            </div>
+
+            <!-- 구분선 -->
+            <div v-if="formData.sections.length > 0" class="sidebar-divider" />
+
+            <!-- 동적 섹션 (순서 변경 가능) -->
+            <VueDraggableNext
+              v-model="formData.sections"
+              tag="div"
+              handle=".sidebar-section-drag-handle"
+              :animation="200"
+              ghost-class="sidebar-section-ghost"
+              chosen-class="sidebar-section-chosen"
+              drag-class="sidebar-section-drag"
+              @end="updateSortOrder"
+            >
+              <div
+                v-for="(section, index) in formData.sections"
+                :key="section.tempId"
+                class="sidebar-section-item"
+              >
+                <div class="sidebar-section-drag-handle">
+                  <v-icon size="small" color="#6b7280">mdi-drag-vertical</v-icon>
+                </div>
+                <div class="sidebar-section-info">
+                  <span class="sidebar-section-number">{{ index + 1 }}</span>
+                  <span class="sidebar-section-title">
+                    {{ section.title || `항목 ${index + 1}` }}
+                  </span>
+                </div>
+                <button class="sidebar-section-delete" @click="removeSection(index)">
+                  <v-icon size="small">mdi-delete-outline</v-icon>
+                </button>
+              </div>
+            </VueDraggableNext>
+          </div>
+        </div>
+
+        <!-- 미래 확장 공간 -->
+        <!-- <div class="sidebar-section">
+          <div class="sidebar-placeholder">
+            <v-icon size="small" color="#d1d5db">mdi-dots-horizontal</v-icon>
+            <p class="sidebar-placeholder-text">추가 기능 예정</p>
+          </div>
+        </div> -->
+      </aside>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import { VueDraggableNext } from 'vue-draggable-next';
+import Button from '@/components/atoms/Button/Button.vue';
+import Input from '@/components/atoms/Input/Input.vue';
+import TextArea from '@/components/atoms/TextArea/TextArea.vue';
+import DatePicker from '@/components/atoms/DatePicker/DatePicker.vue';
+import { ButtonVariant, CommonSize } from '@/constants/enums/style-enum';
+import type { AchievementSection } from '@/types/achievement-types';
+
+const toast = useToast();
 
 definePageMeta({
   layout: 'default',
 });
 
-interface Career {
-  company: string;
-  role: string;
-  startDate: string;
-  endDate: string;
-  description: string;
-}
-
-interface Education {
-  school: string;
-  major: string;
-  degree: string;
-  graduationYear: number | null;
+interface FormSection extends AchievementSection {
+  tempId: string; // 프론트엔드에서 임시로 사용할 ID
+  isEditingTitle?: boolean; // 제목 편집 모드 여부
+  tempTitle?: string; // 편집 중인 임시 제목 (수정 전 원본 저장)
 }
 
 interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  position: string;
-  careers: Career[];
-  educations: Education[];
+  title: string;
+  orgName: string;
+  durationStart: string;
+  durationEnd: string;
+  impactSummary: string;
   skills: string;
+  sections: FormSection[];
 }
 
 const formData = ref<FormData>({
-  name: '',
-  email: '',
-  phone: '',
-  position: '',
-  careers: [
-    {
-      company: '',
-      role: '',
-      startDate: '',
-      endDate: '',
-      description: '',
-    },
-  ],
-  educations: [
-    {
-      school: '',
-      major: '',
-      degree: '',
-      graduationYear: null,
-    },
-  ],
+  title: '',
+  orgName: '',
+  durationStart: '',
+  durationEnd: '',
+  impactSummary: '',
   skills: '',
+  sections: [],
 });
 
-const addCareer = () => {
-  formData.value.careers.push({
-    company: '',
-    role: '',
-    startDate: '',
-    endDate: '',
-    description: '',
+let sectionCounter = 0;
+
+const addSection = () => {
+  formData.value.sections.push({
+    tempId: `section_${Date.now()}_${sectionCounter++}`,
+    kind: 'CUSTOM',
+    title: '',
+    content: '',
+    sortOrder: formData.value.sections.length,
+    isEditingTitle: false,
+    tempTitle: '',
   });
 };
 
-const removeCareer = (index: number) => {
-  if (formData.value.careers.length > 1) {
-    formData.value.careers.splice(index, 1);
-  }
+const removeSection = (index: number) => {
+  formData.value.sections.splice(index, 1);
+  updateSortOrder();
 };
 
-const addEducation = () => {
-  formData.value.educations.push({
-    school: '',
-    major: '',
-    degree: '',
-    graduationYear: null,
+// 섹션 순서 업데이트
+const updateSortOrder = () => {
+  formData.value.sections.forEach((section, index) => {
+    section.sortOrder = index;
   });
 };
 
-const removeEducation = (index: number) => {
-  if (formData.value.educations.length > 1) {
-    formData.value.educations.splice(index, 1);
-  }
+// 섹션 제목 편집 시작
+const startEditSectionTitle = (index: number) => {
+  const section = formData.value.sections[index];
+  section.tempTitle = section.title || `항목 ${index + 1}`; // 수정 전 원본 저장
+  section.isEditingTitle = true;
+};
+
+// 섹션 제목 적용
+const applySectionTitle = (index: number) => {
+  const section = formData.value.sections[index];
+  section.title = section.tempTitle || ''; // tempTitle을 실제 title로 적용
+  section.tempTitle = '';
+  section.isEditingTitle = false;
+};
+
+// 섹션 제목 편집 취소
+const cancelSectionTitleEdit = (index: number) => {
+  const section = formData.value.sections[index];
+  section.tempTitle = '';
+  section.isEditingTitle = false;
 };
 
 const handleSave = () => {
-  console.log('저장:', formData.value);
-  // TODO: 저장 로직 구현
-  alert('저장되었습니다!');
+  // 필수 필드 검증
+  if (!formData.value.title.trim()) {
+    toast.error('제목을 입력해주세요.');
+    return;
+  }
+  if (!formData.value.durationStart) {
+    toast.error('시작일을 입력해주세요.');
+    return;
+  }
+  if (!formData.value.impactSummary.trim()) {
+    toast.error('핵심 성과를 입력해주세요.');
+    return;
+  }
+
+  console.log('저장할 데이터:', formData.value);
+  // TODO: API 호출하여 저장
+  toast.success('성과가 저장되었습니다!');
+};
+
+const handleCancel = () => {
+  // 폼 초기화 또는 이전 페이지로 이동
+  window.history.back();
 };
 </script>
 
