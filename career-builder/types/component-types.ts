@@ -2,7 +2,12 @@
  * 컴포넌트 Props 타입 정의
  */
 
-import { ButtonVariant, CommonSize, InputVariant } from '@/constants/enums/style-enum';
+import type {
+  ButtonVariant,
+  CommonSize,
+  FormSize,
+  FormVariant,
+} from '@/constants/enums/style-enum';
 
 // Button 컴포넌트 Props
 export interface ButtonProps {
@@ -63,3 +68,33 @@ export type TDatePickerProps = {
   useTimePicker?: boolean;
   useTimePickerInline?: boolean;
 };
+
+// Select 컴포넌트
+export type TModelValue = string | number | null | Array<string | number>;
+
+export type TSelectItem = {
+  title: string | number;
+  value: TModelValue;
+  disabled?: boolean;
+  subtitle?: string;
+};
+
+export type TSelectProps<T extends TModelValue = TModelValue> = {
+  modelValue: T;
+  items: TSelectItem[];
+  placeholder?: string;
+  size?: FormSize;
+  variant?: FormVariant;
+  multiple?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
+  menu?: boolean;
+};
+
+// DescriptionBox 컴포넌트
+export type DescriptionBoxVariant = 'info' | 'warning' | 'success' | 'neutral';
+
+export interface DescriptionBoxProps {
+  text?: string;
+  variant?: DescriptionBoxVariant;
+}
